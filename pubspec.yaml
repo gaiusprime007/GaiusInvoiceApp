@@ -1,0 +1,35 @@
+name: invoice_app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  get: ^4.7.2
+  pdf: ^3.11.3
+  printing: ^5.14.2
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: "^0.14.4"
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/Gaius_logo.jpg"
+  remove_alpha_ios: true
+    # min_sdk_android: 21
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+
+
