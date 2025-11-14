@@ -8,7 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   final double? fontSize;
   final double? height;
   final ValueChanged<String>? onChanged;
-  // final double? width;
+
   const CustomTextFormField({
     super.key,
     this.controller,
@@ -17,13 +17,31 @@ class CustomTextFormField extends StatelessWidget {
     this.isWidthAdjustable = true,
     this.fontSize,
     this.height,
-    this.onChanged
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Calculate dynamic width
+    double fieldWidth;
+    if (!isWidthAdjustable) {
+      fieldWidth = double.infinity;
+    } else if (screenWidth < 350) {
+      fieldWidth = screenWidth * 0.5; // small screen
+    } else if (screenWidth < 600) {
+      fieldWidth = screenWidth * 0.35; // medium
+    } else {
+      fieldWidth = 200; // large screens
+    }
+
+    // Dynamic height (optional)
+    final fieldHeight = height ?? 50.0;
+
     return SizedBox(
-      width: isWidthAdjustable ? 120 : double.infinity,
+      width: fieldWidth,
+      height: fieldHeight,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white10,
@@ -34,17 +52,23 @@ class CustomTextFormField extends StatelessWidget {
           onChanged: onChanged,
           cursorColor: Colors.white24,
           controller: controller,
+          style: TextStyle(fontSize: fontSize ?? 14, color: Colors.white),
           decoration: InputDecoration(
-            label: Text(label),
-            labelStyle: TextStyle(color: Colors.white, fontSize: fontSize),
+            label: Text(
+              label,
+              style: TextStyle(color: Colors.white70, fontSize: fontSize ?? 14),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 14,
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.white24),
+              borderSide: const BorderSide(color: Colors.white24),
             ),
-
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.white24),
+              borderSide: const BorderSide(color: Colors.white24),
             ),
           ),
         ),

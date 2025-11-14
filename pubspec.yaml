@@ -25,7 +25,7 @@ flutter_icons:
   ios: true
   image_path: "assets/Gaius_logo.jpg"
   remove_alpha_ios: true
-    # min_sdk_android: 21
+
 
 flutter:
   uses-material-design: true

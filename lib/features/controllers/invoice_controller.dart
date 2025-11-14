@@ -12,6 +12,9 @@ class InvoiceController extends GetxController {
     return 'INV-$number';
   }
 
+  final senderController = TextEditingController();
+  final recepientController = TextEditingController();
+
   //Selected Date Controller
   final selectedDate = Rx<DateTime?>(null);
 
@@ -41,11 +44,6 @@ class InvoiceController extends GetxController {
     }
   }
 
-  //Collapsable Section
-  // var items = <InvoiceItem>[].obs;
-  // var subTotal = 0.0.obs;
-  // final RxDouble discount = 0.0.obs;
-  // final RxDouble tax = 0.0.obs;
 
   final RxList<SectionModel> sections = <SectionModel>[].obs;
 
@@ -126,11 +124,51 @@ class InvoiceController extends GetxController {
     _updateGrandTotal();
   }
 
+ void resetInvoice() {
+
+  
+  // Clear From/To fields
+  senderController.clear();
+  recepientController.clear();
+
+  // Clear Discount / Tax
+  discountPercentageController.clear();
+  discount.value = 0.0;
+  // taxPercentageController.clear();
+  tax.value = 0.0;
+
+  // Clear sections
+  for (var section in sections) {
+    for (var item in section.items) {
+      item.dispose();
+    }
+    section.items.clear();
+    section.subTotal.value = 0.0;
+  }
+  sections.clear();
+
+  // Reset totals
+  subTotalGross.value = 0.0;
+  grandTotal.value = 0.0;
+
+  // Add default sections again
+  addSection('Backend');
+  addSection('Frontend');
+  addSection('Fullstack');
+  addSection('Add-ons');
+}
+
+
   @override
   void onClose() {
     for (var s in sections) {
       s.dispose();
     }
+
+    senderController.dispose();
+    recepientController.dispose();
+
+    discountPercentageController.dispose();
     super.onClose();
   }
 }

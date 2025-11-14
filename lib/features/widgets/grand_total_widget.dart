@@ -21,8 +21,42 @@ class GrandTotalWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Dynamic font sizes
+    final double labelFontSize = big!
+        ? (screenWidth < 350
+              ? 16
+              : screenWidth < 600
+              ? 16
+              : 18)
+        : (screenWidth < 350
+              ? 12
+              : screenWidth < 600
+              ? 14
+              : 16);
+
+    final double amountFontSize = big!
+        ? (screenWidth < 350
+              ? 18
+              : screenWidth < 600
+              ? 18
+              : 20)
+        : (screenWidth < 350
+              ? 12
+              : screenWidth < 600
+              ? 14
+              : 16);
+
+    // Dynamic vertical padding
+    final verticalPadding = screenWidth < 350
+        ? 2.0
+        : screenWidth < 600
+        ? 4.0
+        : 6.0;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: verticalPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -31,7 +65,7 @@ class GrandTotalWidget extends StatelessWidget {
             style: TextStyle(
               color: Colors.white70,
               fontWeight: isBold! ? FontWeight.bold : FontWeight.normal,
-              fontSize: big! ? 16 : 14,
+              fontSize: labelFontSize,
             ),
           ),
           Obx(() {
@@ -40,7 +74,7 @@ class GrandTotalWidget extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: isBold! ? FontWeight.bold : FontWeight.normal,
-                fontSize: big! ? 18 : 14,
+                fontSize: amountFontSize,
               ),
             );
           }),
