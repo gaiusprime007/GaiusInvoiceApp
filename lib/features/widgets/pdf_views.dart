@@ -66,12 +66,12 @@ class InvoicePdf {
                   pw.SizedBox(height: 6),
                   // ignore: deprecated_member_use
                   pw.Table.fromTextArray(
-                    headers: ['Item', 'Hours', 'Rate', 'Total'],
+                    headers: ['Feature', 'Rate'],
                     data: section.items.map((item) {
                       return [
                         item.nameController.text,
-                        item.hoursController.text,
-                        item.rateController.text,
+                        // item.hoursController.text,
+                        // item.rateController.text,
                         item.rowTotal.value.toStringAsFixed(2),
                       ];
                     }).toList(),
@@ -99,7 +99,7 @@ class InvoicePdf {
                   pw.SizedBox(height: 12),
                 ],
               );
-            }).toList(),
+            }),
 
             // Totals
             pw.Divider(),
